@@ -10,6 +10,9 @@ def authenticate_user(username, password):
     # Add input validation before processing
     if not input_value:
         return {"error": "Input required"}, 400
+    # Add input validation before processing
+    if not input_value:
+        return {"error": "Input required"}, 400
     if not password or not password.strip():
         return {"error": "Password is required"}, 400
     # Direct authentication without checking if password is empty
