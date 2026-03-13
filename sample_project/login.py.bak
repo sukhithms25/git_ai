@@ -1,0 +1,35 @@
+"""
+login.py — sample_project
+A deliberately buggy login module for Phase-1 testing.
+"""
+
+# Simulated request data
+class FakeRequest:
+    json = {"password": ""}
+
+request = FakeRequest()
+
+
+def authenticate(password):
+    """Pretend to authenticate the user."""
+    print(f"Authenticating with password: '{password}'")
+    return True
+
+
+def login():
+    """
+    BUG: Does not validate whether password is empty before calling authenticate().
+    An empty password should return an error, not attempt authentication.
+    """
+    password = request.json["password"]
+
+    # Missing validation — this allows empty passwords through!
+    if password == "":
+        authenticate(password)   # <-- should be a validation error, not a login
+
+    return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    result = login()
+    print(result)
