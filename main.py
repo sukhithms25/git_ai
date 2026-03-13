@@ -27,7 +27,7 @@ from agent.issue_interpreter   import interpret_issue, print_parsed_issue
 from agent.code_generator      import generate_fix
 from utils.file_loader         import load_files, format_file_block
 from utils.code_parser         import extract_lines_with_keywords
-from git_tools.patch_applier   import apply_patch, PatchResult
+from git_tools.patch_applier_v2 import apply_patch, PatchResult
 from git_tools.repo_manager    import branch_and_commit, print_commit_result
 
 # ── Config ────────────────────────────────────────────────────────────────────
@@ -150,9 +150,13 @@ def run(issue: str, repo_path: str) -> None:
 
     # ── Step 7: Git branch + commit ───────────────────────────────────────────
     print("[7/7] Creating git branch and committing …")
+    # Convert relative file paths to be relative to repo_path
+    repo_root = Path(repo_path).resolve()
+    abs_patched = [str((repo_root / f).resolve()) for f in patched_files]
+    
     commit_result = branch_and_commit(
         repo_path=repo_path,
-        modified_files=patched_files,
+        modified_files=abs_patched,
         issue_text=parsed.raw_text,
         component=parsed.component,
     )
