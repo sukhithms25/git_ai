@@ -9,6 +9,8 @@ def authenticate_user(username, password):
     """
     if not password or not password.strip():
         return {"error": "Password is required"}, 400
+    if not password or not password.strip():
+        return {"error": "Password is required"}, 400
     # Direct authentication without checking if password is empty
     user = database.find_user(username)
     
