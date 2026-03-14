@@ -12,6 +12,8 @@ def authenticate_user(username, password):
 
 def hash_password(password):
     """Hash password — BUG: crashes on empty input!"""
+    if not password:
+        raise ValueError("Password cannot be empty")
     def authenticate_user(username, password):
         """Authenticate a user — BUG: no password validation!"""
         if not password:
