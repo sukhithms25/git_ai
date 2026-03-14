@@ -23,6 +23,7 @@ try:
     import ollama  # type: ignore
     OLLAMA_AVAILABLE = True
 except ImportError:
+    ollama = None
     OLLAMA_AVAILABLE = False
 
 from github_tools.github_auth import get_github_client
@@ -91,7 +92,7 @@ def _generate_review(diff: str, issue_text: str) -> str:
     """Send diff to LLM and get review."""
     prompt = REVIEW_PROMPT.format(diff=diff, issue=issue_text)
 
-    if OLLAMA_AVAILABLE:
+    if OLLAMA_AVAILABLE and ollama is not None:
         try:
             response = ollama.chat(
                 model=MODEL,
