@@ -10,6 +10,18 @@ def authenticate_user(username, password):
 
 def hash_password(password):
     """Hash password — FIXED"""
+    # Add input validation to ensure username and password are not empty
+    if not username or not password:
+        return "Invalid input", 400
+
+    # Apply password hashing logic here
+    hashed_password = hash_password(password)
+
+    # Authenticate user logic here
+    if authenticate_user(username, hashed_password):
+        return "Login successful"
+    else:
+        return "Login failed", 401
     if not password:
         raise ValueError("Password cannot be empty")
     return hashlib.sha256(password.encode()).hexdigest()
