@@ -8,6 +8,21 @@ def authenticate_user(username, password):
     BUG 1: No validation for empty password - will crash!
     BUG 2: No validation for empty username
     """
+    # Fix for BUG 1: No validation for empty password
+    if not password:
+        return {"error": "Password is required"}, 400
+
+    # Fix for BUG 2: No validation for empty username
+    if not username:
+        return {"error": "Username is required"}, 400
+
+    # Fix for BUG 3: This will crash on None or empty password
+    if not password:
+        return {"error": "Password is required"}, 400
+
+    # Fix for BUG 6: No password strength check
+    if len(new_password) < 8:
+        return {"error": "Password must be at least 8 characters long"}, 400
     if not password:
         return {"error": "Password is required"}, 400
     if not password or not password.strip():
