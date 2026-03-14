@@ -12,6 +12,27 @@ def authenticate_user(username, password):
 
 def hash_password(password):
     """Hash password — BUG: crashes on empty input!"""
+    import hashlib
+
+    def hash_password(password):
+        """Hash password — BUG: crashes on empty input!"""
+        if not password:
+            return None
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def authenticate_user(username, password):
+        """Authenticate a user — BUG: no password validation!"""
+        if not username or not password:
+            return False
+        # Add actual authentication logic here
+        return True
+
+    def login_endpoint(username, password):
+        """Login endpoint — BUG: no input validation!"""
+        if not username or not password:
+            return "Invalid input"
+        # Add actual login logic here
+        return "Login successful"
     # Add password validation
     def authenticate_user(username, password):
         if not password:
