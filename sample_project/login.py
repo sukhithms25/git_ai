@@ -8,6 +8,8 @@ def authenticate_user(username, password):
     BUG 1: No validation for empty password - will crash!
     BUG 2: No validation for empty username
     """
+    if not password or not password.strip():
+        return {"error": "Password is required"}, 400
     # Add input validation before processing
     if not input_value:
         return {"error": "Input required"}, 400
