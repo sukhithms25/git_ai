@@ -1,3 +1,18 @@
+def authenticate_user(username, password):
+    """Authenticate a user — FIXED"""
+    if not username or not password:
+        return False
+    user = database.find_user(username)
+    if user and user.password_hash == hash_password(password):
+        return {"success": True, "user": user}
+    return {"success": False, "error": "Invalid credentials"}
+
+
+def hash_password(password):
+    """Hash password — FIXED"""
+    if not password:
+        raise ValueError("Password cannot be empty")
+    return hashlib.sha256(password.encode()).hexdigest()
 """
 login.py - Demo buggy authentication module
 """
