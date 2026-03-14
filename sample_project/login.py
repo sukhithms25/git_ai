@@ -1,88 +1,47 @@
 """
-login.py - Intentionally buggy authentication module for testing
+login.py - Demo buggy authentication module
 """
 
 def authenticate_user(username, password):
-    """
-    Authenticate a user with username and password.
-    BUG 1: No validation for empty password - will crash!
-    BUG 2: No validation for empty username
-    """
-    # Fix for BUG 1: No validation for empty password
-    if not password:
-        return {"error": "Password is required"}, 400
-
-    # Fix for BUG 2: No validation for empty username
-    if not username:
-        return {"error": "Username is required"}, 400
-
-    # Fix for BUG 3: This will crash on None or empty password
-    if not password:
-        return {"error": "Password is required"}, 400
-
-    # Fix for BUG 6: No password strength check
-    if len(new_password) < 8:
-        return {"error": "Password must be at least 8 characters long"}, 400
-    if not password:
-        return {"error": "Password is required"}, 400
-    if not password or not password.strip():
-        return {"error": "Password is required"}, 400
-    # Add input validation before processing
-    if not input_value:
-        return {"error": "Input required"}, 400
-    # Add input validation before processing
-    if not input_value:
-        return {"error": "Input required"}, 400
-    # Add input validation before processing
-    if not input_value:
-        return {"error": "Input required"}, 400
-    if not password or not password.strip():
-        return {"error": "Password is required"}, 400
-    # BUG: Direct authentication without checking if inputs are empty
+    """Authenticate a user — BUG: no password validation!"""
     user = database.find_user(username)
-    
-    # This will crash if password is None or empty string
     if user.password_hash == hash_password(password):
         return {"success": True, "user": user}
-    
     return {"success": False, "error": "Invalid credentials"}
 
 
 def hash_password(password):
-    """
-    Hash the password
-    BUG 3: This will crash on None or empty password!
-    """
+    """Hash password — BUG: crashes on empty input!"""
+    def authenticate_user(username, password):
+        """Authenticate a user — BUG: no password validation!"""
+        if not password:
+            return False
+        if user.password_hash == hash_password(password):
+            return True
+        return False
+
+    def hash_password(password):
+        """Hash password — BUG: crashes on empty input!"""
+        if not password:
+            return None
+        return hashlib.sha256(password.encode()).hexdigest()
+
+    def login_endpoint(request):
+        """Login endpoint — BUG: no input validation!"""
+        username = request.json.get('username')
+        password = request.json.get('password')
+        if not username or not password:
+            return False
+        result = authenticate_user(username, password)
     import hashlib
-    # BUG: No null check - will crash with AttributeError
     return hashlib.sha256(password.encode()).hexdigest()
 
 
 def login_endpoint(request):
-    """
-    Flask/FastAPI login endpoint
-    BUG 4: No input validation at all!
-    """
+    """Login endpoint — BUG: no input validation!"""
     username = request.json.get('username')
     password = request.json.get('password')
-    
-    # BUG: Missing validation - what if request.json is None?
     result = authenticate_user(username, password)
-    
     if result['success']:
         return {"token": generate_token(result['user'])}, 200
-    else:
-        return {"error": result['error']}, 401
-
-
-def reset_password(email, new_password):
-    """
-    Reset user password
-    BUG 5: No email validation!
-    BUG 6: No password strength check!
-    """
-    user = database.find_user_by_email(email)
-    # BUG: What if user is None?
-    user.password_hash = hash_password(new_password)
-    user.save()
-    return {"success": True}
+    return {"error": result['error']}, 401
