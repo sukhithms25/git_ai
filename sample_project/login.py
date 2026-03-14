@@ -12,6 +12,27 @@ def authenticate_user(username, password):
 
 def hash_password(password):
     """Hash password — BUG: crashes on empty input!"""
+    # Add password validation
+    def authenticate_user(username, password):
+        if not password:
+            raise ValueError("Password cannot be empty")
+        # Existing logic...
+
+    # Add password hashing
+    def hash_password(password):
+        if not password:
+            raise ValueError("Password cannot be empty")
+        # Existing logic...
+
+    # Add input validation
+    @app.route('/login', methods=['POST'])
+    def login():
+        data = request.get_json()
+        if not data or 'username' not in data or 'password' not in data:
+            return jsonify({"error": "Missing username or password"}), 400
+        # Existing logic...
+    if not password:
+        raise ValueError("Password cannot be empty")
     def authenticate_user(username, password):
         """Authenticate a user — BUG: no password validation!"""
         if not password:
