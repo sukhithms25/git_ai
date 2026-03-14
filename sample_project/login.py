@@ -12,6 +12,27 @@ def authenticate_user(username, password):
 
 def hash_password(password):
     """Hash password — BUG: crashes on empty input!"""
+    # Add password validation
+    def validate_password(password):
+        if not password:
+            raise ValueError("Password cannot be empty")
+
+    # Add input validation
+    def validate_input(username, password):
+        if not username or not password:
+            raise ValueError("Both username and password are required")
+
+    # Apply password validation in the authentication function
+    def authenticate_user(username, password):
+        validate_password(password)
+        # existing authentication logic
+
+    # Apply input validation in the login endpoint
+    @app.route('/login', methods=['POST'])
+    def login():
+        data = request.get_json()
+        validate_input(data.get('username'), data.get('password'))
+        # existing login logic
     import hashlib
 
     def hash_password(password):
