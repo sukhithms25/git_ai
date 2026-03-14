@@ -157,6 +157,11 @@ def apply_patch_smart(
 
     # Read original
     original = path.read_text(encoding="utf-8")
+
+    # Duplicate check - skip if fix already applied
+    if patch_code.strip() in original:
+        return PatchResult(success=True, target_file=str(path),
+                           lines_changed=0, patch_code=patch_code)
     lines = original.splitlines(keepends=True)
 
     # Find where to insert

@@ -20,31 +20,31 @@ except ImportError:
 
 # ── Configuration ───────────────────────────────────────────────────────────
 
-MODEL = "codellama"          # swap for "llama3", "mistral", "deepseek-coder", etc.
+MODEL = "qwen2.5-coder:7b"          # swap for "llama3", "mistral", "deepseek-coder", etc.
 MAX_CONTEXT_CHARS = 6_000    # trim code snippets to avoid exceeding context window
 
 # ── Prompt template ─────────────────────────────────────────────────────────
 
 PROMPT_TEMPLATE = """\
-You are an expert software engineer and code reviewer.
+You are a senior software engineer fixing a bug.
 
-A developer has reported the following issue:
-
-ISSUE:
+Bug report:
 {issue}
 
-Below is the relevant source code from the repository:
-
-CODE:
+Relevant code:
 {code}
 
-Your task:
-1. Identify the root cause of the issue.
-2. Provide a clear, minimal, correct code fix.
-3. Briefly explain *why* the fix works.
-4. Format your fix as a code block.
+Instructions:
+1. Identify the root cause
+2. Write ONLY the fix as a code block
+3. Do NOT rewrite the entire file
+4. Do NOT remove any existing logic
+5. Keep the fix minimal and correct
 
-Do NOT rewrite the entire file. Only show the changed or added lines.
+Return the fix in this exact format:
+```python
+<your fix here>
+```
 """
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
